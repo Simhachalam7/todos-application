@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { login } from '../services/api';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import styles from '../styles/Form.module.css';
+import { login } from '../services/api';  // API call for login
+import Button from '../components/Button';  // Reusable button component
+import styles from '../styles/Form.module.css';  // Form styles
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,10 +14,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await login({ email, password });
-      localStorage.setItem('token', response.data.token);
-      navigate('/dashboard');
+      localStorage.setItem('token', response.data.token);  // Store JWT token in localStorage
+      navigate('/dashboard');  // Redirect to Dashboard
     } catch (error) {
-      setMessage('Login failed. Check your credentials.');
+      setMessage('Login failed. Please check your credentials.');
     }
   };
 
@@ -42,8 +42,9 @@ const Login = () => {
           className={styles.input}
         />
         <Button type="submit">Login</Button>
+        <p>{message}</p>
       </form>
-      {message && <p>{message}</p>}
+      <Button onClick={() => navigate('/signup')}>Sign Up</Button>
     </div>
   );
 };

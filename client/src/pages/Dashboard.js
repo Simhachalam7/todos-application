@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api';
-import Button from '../components/Button';
-import styles from '../styles/Dashboard.module.css';
+import Button from '../components/Button';  // Reusable Button component
+import styles from '../styles/Dashboard.module.css';  // Styles for Dashboard
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -14,6 +14,7 @@ const Dashboard = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
+  // Fetch tasks on component load
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -26,6 +27,7 @@ const Dashboard = () => {
     fetchTasks();
   }, [token]);
 
+  // Handle Create Task
   const handleCreateTask = async (e) => {
     e.preventDefault();
     try {
@@ -40,6 +42,7 @@ const Dashboard = () => {
     }
   };
 
+  // Handle Edit Task
   const handleEdit = (task) => {
     setEditMode(true);
     setCurrentTask(task.id);
@@ -48,6 +51,7 @@ const Dashboard = () => {
     setStatus(task.status);
   };
 
+  // Handle Update Task
   const handleUpdateTask = async (e) => {
     e.preventDefault();
     try {
@@ -63,6 +67,7 @@ const Dashboard = () => {
     }
   };
 
+  // Handle Delete Task
   const handleDelete = async (taskId) => {
     try {
       await deleteTask(taskId, token);
@@ -72,16 +77,32 @@ const Dashboard = () => {
     }
   };
 
-  const handleProfileEdit = () => {
-    navigate('/profile'); // Navigate to the profile page
+  // Navigate to Profile Edit page
+  // const handleProfileEdit = () => {
+  //   navigate('/profile');
+  // };
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');  // Clear JWT token from localStorage
+    navigate('/login');  // Redirect to login page
   };
 
   return (
     <div className={styles.dashboard}>
-      <Button type="button" onClick={handleProfileEdit} className={styles.editProfileButton}>
-        Edit Profile
-      </Button>
+      {/* Logout and Profile Edit buttons */}
+      <div className={styles.header}>
+        {/* <Button type="button" onClick={handleProfileEdit} className={styles.editProfileButton}>
+          Edit Profile
+        </Button> */}
+        <Button type="button" onClick={handleLogout} className={styles.logoutButton}>
+          Logout
+        </Button>
+      </div>
+
       <h2>Task Dashboard</h2>
+      
+      {/* Task Form for Create/Update */}
       <form onSubmit={editMode ? handleUpdateTask : handleCreateTask} className={styles.form}>
         <input
           type="text"
@@ -114,6 +135,7 @@ const Dashboard = () => {
         <Button type="submit">{editMode ? 'Update Task' : 'Create Task'}</Button>
       </form>
 
+      {/* Task List */}
       <ul className={styles.taskList}>
         {tasks.map((task) => (
           <li key={task.id} className={styles.taskItem}>

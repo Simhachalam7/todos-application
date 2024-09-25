@@ -1,51 +1,35 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
 const User = require('../models/userModel');
 
-// Signup function
+// Signup
 exports.signup = async (req, res) => {
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
+  try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = { id: uuidv4(), name, email, password: hashedPassword };
-
-    try {
-        await User.create(user);
-        const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
-        res.status(201).json({ token });
-    } catch (error) {
-        res.status(400).json({ error: 'Error registering user' });
-    }
+    const user = { id: Date.now().toString(), name, email, password: hashedPassword };
+    await User.create(user);
+    
+    const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
+    res.status(201).json({ token });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering user' });
+  }
 };
 
-// Login function
+// Login
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
+  try {
     const user = await User.findByEmail(email);
+    if (!user) return res.status(401).json({ message: 'Invalid email or password' });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
 
-    const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     res.json({ token });
-};
-
-// Get user profile
-exports.getProfile = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    res.json(user);
-};
-
-// Update user profile
-exports.updateProfile = async (req, res) => {
-    const { name, email, password } = req.body;
-    const updatedUser = { name, email };
-
-    if (password) {
-        updatedUser.password = await bcrypt.hash(password, 10);
-    }
-
-    await User.update(req.user.id, updatedUser);
-    res.json({ message: 'Profile updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in' });
+  }
 };

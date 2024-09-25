@@ -3,20 +3,18 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
 
-// Check if user is authenticated
+// Check if the user is authenticated by checking if a token exists
 const isAuthenticated = () => !!localStorage.getItem('token');
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Navigate to="/signup" />} />
+        <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/profile" element={isAuthenticated() ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

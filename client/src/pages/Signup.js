@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { signup } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { signup } from '../services/api';
 import Button from '../components/Button';
 import styles from '../styles/Form.module.css';
 
@@ -15,10 +15,10 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await signup({ name, email, password });
-      localStorage.setItem('token', response.data.token);
-      navigate('/dashboard');
+      localStorage.setItem('token', response.data.token);  // Store JWT token in localStorage
+      navigate('/dashboard');  // Redirect to Dashboard
     } catch (error) {
-      setMessage('Signup failed. Try again.');
+      setMessage('Signup failed.');
     }
   };
 
@@ -51,8 +51,8 @@ const Signup = () => {
           className={styles.input}
         />
         <Button type="submit">Signup</Button>
+        <p>{message}</p>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 };

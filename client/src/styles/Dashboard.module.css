@@ -4,6 +4,12 @@
   margin: 0 auto;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -36,4 +42,12 @@
 
 .deleteButton:hover {
   background-color: #e53935;
+}
+
+.logoutButton {
+  background-color: #4CAF50;
+}
+
+.logoutButton:hover {
+  background-color: #45a049;
 }
