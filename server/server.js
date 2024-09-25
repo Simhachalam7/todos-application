@@ -18,5 +18,5 @@ app.use('/api/users', userRoutes);
 app.use('/api/tasks', verifyToken, taskRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
