@@ -1,22 +1,21 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
-const { verifyToken } = require('./middleware/authMiddleware');
 const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
-const PORT = 5000;
 
-app.use(cors());
+// Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
-// Public routes (Signup, Login)
+// Routes
 app.use('/api/users', userRoutes);
+app.use('/api/tasks', taskRoutes);
 
-// Protected routes (Tasks, requires JWT verification)
-app.use('/api/tasks', verifyToken, taskRoutes);
-
+// Start server
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -2,6 +2,7 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  font-family: Arial, sans-serif;
 }
 
 .header {
@@ -34,10 +35,22 @@
   margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.taskItem:hover {
+  background-color: #f0f0f0;
 }
 
 .deleteButton {
   background-color: #f44336;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .deleteButton:hover {
@@ -46,8 +59,41 @@
 
 .logoutButton {
   background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .logoutButton:hover {
   background-color: #45a049;
+}
+
+.editProfileButton {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.editProfileButton:hover {
+  background-color: #1e88e5;
+}
+
+button {
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  opacity: 0.8;
 }

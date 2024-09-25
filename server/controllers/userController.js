@@ -13,6 +13,7 @@ exports.signup = async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     res.status(201).json({ token });
   } catch (error) {
+    console.error('Error registering user:', error.message);
     res.status(500).json({ message: 'Error registering user' });
   }
 };
@@ -30,6 +31,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, 'your_jwt_secret', { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
+    console.error('Error logging in:', error.message);
     res.status(500).json({ message: 'Error logging in' });
   }
 };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api';
-import Button from '../components/Button';  // Reusable Button component
-import styles from '../styles/Dashboard.module.css';  // Styles for Dashboard
+import Button from '../components/Button';
+import styles from '../styles/Dashboard.module.css';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -77,11 +77,6 @@ const Dashboard = () => {
     }
   };
 
-  // Navigate to Profile Edit page
-  // const handleProfileEdit = () => {
-  //   navigate('/profile');
-  // };
-
   // Handle Logout
   const handleLogout = () => {
     localStorage.removeItem('token');  // Clear JWT token from localStorage
@@ -90,18 +85,14 @@ const Dashboard = () => {
 
   return (
     <div className={styles.dashboard}>
-      {/* Logout and Profile Edit buttons */}
       <div className={styles.header}>
-        {/* <Button type="button" onClick={handleProfileEdit} className={styles.editProfileButton}>
-          Edit Profile
-        </Button> */}
         <Button type="button" onClick={handleLogout} className={styles.logoutButton}>
           Logout
         </Button>
       </div>
 
       <h2>Task Dashboard</h2>
-      
+
       {/* Task Form for Create/Update */}
       <form onSubmit={editMode ? handleUpdateTask : handleCreateTask} className={styles.form}>
         <input

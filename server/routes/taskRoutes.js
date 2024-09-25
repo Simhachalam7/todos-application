@@ -1,4 +1,5 @@
 const express = require('express');
+const { verifyToken } = require('../middleware/authMiddleware');
 const {
     createTask,
     getTasks,
@@ -7,10 +8,10 @@ const {
 } = require('../controllers/taskController');
 const router = express.Router();
 
-// CRUD operations for tasks
-router.post('/', createTask);
-router.get('/', getTasks);
-router.put('/:id', updateTask);
-router.delete('/:id', deleteTask);
+// Protect these routes with JWT middleware
+router.post('/', verifyToken, createTask);
+router.get('/', verifyToken, getTasks);
+router.put('/:id', verifyToken, updateTask);
+router.delete('/:id', verifyToken, deleteTask);
 
 module.exports = router;
