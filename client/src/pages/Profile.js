@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getProfile, updateProfile } from '../services/api';
 import Button from '../components/Button';
 import styles from '../styles/Profile.module.css';
@@ -8,8 +9,9 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-
+  
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -34,6 +36,10 @@ const Profile = () => {
       console.error('Error updating profile', error);
       setMessage('Update failed. Try again.');
     }
+  };
+
+  const back = () => {
+    navigate('/'); // Navigate to the home page
   };
 
   return (
@@ -63,6 +69,7 @@ const Profile = () => {
         />
         <Button type="submit">Update Profile</Button>
       </form>
+      <Button type="button" onClick={back}>Back</Button>
       {message && <p>{message}</p>}
     </div>
   );

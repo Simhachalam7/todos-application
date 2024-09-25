@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getTasks, createTask, updateTask, deleteTask } from '../services/api';
 import Button from '../components/Button';
 import styles from '../styles/Dashboard.module.css';
@@ -9,8 +10,9 @@ const Dashboard = () => {
   const [currentTask, setCurrentTask] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState('');
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -32,7 +34,7 @@ const Dashboard = () => {
       setTasks([...tasks, response.data]);
       setTitle('');
       setDescription('');
-      setStatus('pending');
+      setStatus('');
     } catch (error) {
       console.error('Error creating task', error);
     }
@@ -55,7 +57,7 @@ const Dashboard = () => {
       setEditMode(false);
       setTitle('');
       setDescription('');
-      setStatus('pending');
+      setStatus('');
     } catch (error) {
       console.error('Error updating task', error);
     }
@@ -70,8 +72,15 @@ const Dashboard = () => {
     }
   };
 
+  const handleProfileEdit = () => {
+    navigate('/profile'); // Navigate to the profile page
+  };
+
   return (
     <div className={styles.dashboard}>
+      <Button type="button" onClick={handleProfileEdit} className={styles.editProfileButton}>
+        Edit Profile
+      </Button>
       <h2>Task Dashboard</h2>
       <form onSubmit={editMode ? handleUpdateTask : handleCreateTask} className={styles.form}>
         <input
@@ -89,7 +98,15 @@ const Dashboard = () => {
           required
           className={styles.input}
         ></textarea>
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className={styles.select}>
+        <select 
+          value={status} 
+          onChange={(e) => setStatus(e.target.value)} 
+          className={styles.select} 
+          required
+        >
+          <option value="" disabled>
+            Select Status
+          </option>
           <option value="pending">Pending</option>
           <option value="in progress">In Progress</option>
           <option value="completed">Completed</option>
