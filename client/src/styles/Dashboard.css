@@ -1,0 +1,64 @@
+.dashboard {
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input, textarea, select {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  button.delete {
+    background-color: #f44336;  /* Red for delete */
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  button.delete:hover {
+    background-color: #e53935;  /* Darker red on hover */
+  }
+  
