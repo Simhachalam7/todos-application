@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../services/api';  // API call for login
-import Button from '../components/Button';  // Reusable button component
-import styles from '../styles/Form.module.css';  // Form styles
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { login } from '../services/api'; // Import login API call
+import Button from '../components/Button';
+import styles from '../styles/Form.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Get navigate function to redirect the user
 
+  // Handle login form submission
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
+
     try {
+      // Call the login API with email and password
       const response = await login({ email, password });
-      localStorage.setItem('token', response.data.token);  // Store JWT token in localStorage
-      navigate('/dashboard');  // Redirect to Dashboard
+      
+      // Store the token in localStorage
+      localStorage.setItem('token', response.data.token);
+
+      // Navigate to dashboard after successful login
+      navigate('/dashboard'); // Redirect to Dashboard after login
     } catch (error) {
-      setMessage('Login failed. Please check your credentials.');
+      setMessage('Login failed. Please check your credentials.'); // Display error message
     }
   };
 
@@ -44,7 +51,6 @@ const Login = () => {
         <Button type="submit">Login</Button>
         <p>{message}</p>
       </form>
-      <Button onClick={() => navigate('/signup')}>Sign Up</Button>
     </div>
   );
 };
