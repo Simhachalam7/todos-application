@@ -51,6 +51,7 @@ const Login = () => {
         <Button type="submit">Login</Button>
         <p>{message}</p>
       </form>
+      <Button onClick={() => navigate('/signup')}>Sign up</Button>
     </div>
   );
 };
