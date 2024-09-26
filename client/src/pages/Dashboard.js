@@ -34,9 +34,7 @@ const Dashboard = () => {
       const newTask = { title, description, status };
       const response = await createTask(newTask, token);
       setTasks([...tasks, response.data]);
-      setTitle('');
-      setDescription('');
-      setStatus('');
+      resetForm(); // Reset form after creating task
     } catch (error) {
       console.error('Error creating task', error);
     }
@@ -46,7 +44,7 @@ const Dashboard = () => {
   const handleEdit = (task) => {
     setEditMode(true);
     setCurrentTask(task.id);
-    setTitle(task.title);
+    setTitle(task.title);  // Populate form fields with selected task details
     setDescription(task.description);
     setStatus(task.status);
   };
@@ -57,14 +55,19 @@ const Dashboard = () => {
     try {
       const updatedTask = { title, description, status };
       const response = await updateTask(currentTask, updatedTask, token);
-      setTasks(tasks.map(task => (task.id === currentTask ? response.data : task)));
-      setEditMode(false);
-      setTitle('');
-      setDescription('');
-      setStatus('');
+      setTasks(tasks.map(task => (task.id === currentTask ? response.data : task)));  // Update task in state
+      resetForm(); // Reset form after updating task
     } catch (error) {
       console.error('Error updating task', error);
     }
+  };
+
+  // Reset the form fields and edit state
+  const resetForm = () => {
+    setEditMode(false);
+    setTitle('');
+    setDescription('');
+    setStatus('');
   };
 
   // Handle Delete Task
@@ -116,9 +119,7 @@ const Dashboard = () => {
           className={styles.select} 
           required
         >
-          <option value="" disabled>
-            Select Status
-          </option>
+          <option value="" disabled>Select Status</option>
           <option value="pending">Pending</option>
           <option value="in progress">In Progress</option>
           <option value="completed">Completed</option>
